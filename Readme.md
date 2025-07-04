@@ -16,9 +16,9 @@ But here's the catch: The entire process should be optimized to execute in the l
   Example: `customers.csv`
 
 ```
-Rajesh,trans1.txt,trans2.txt,trans3.txt
-Suman,trans4.txt
-Rita,trans5.txt,trans6.txt
+Ram,trans1.txt,trans2.txt,trans3.txt
+Saran,trans4.txt
+Maha,trans5.txt,trans6.txt
 ```
 
 2. `Transaction Files`: Each transaction file contains a list of transactions, where each transaction has a single line representing the transaction amount (an integer). You need to sum these transaction amounts for each customer.
@@ -45,7 +45,7 @@ This file contains three transactions: -195, 826, and 859, which sum up to 1490.
 Example balance.csv:
 
 ```
-Rajesh,6,1899
-Suman,1,350
-Rita,3,1240
+Ram,6,1899
+Saran,1,350
+Maha,3,1240
 ```
