@@ -16,4 +16,18 @@ const extractCustomers = () => {
       return customerWithTransactions;
     });
 };
-extractCustomers();
+
+const extractTransactions = () => {
+  return extractCustomers().then((val) => {
+    // val.map((customer) => {
+    //   const [name, ...transFiles] = customer;
+    //   transFiles.reduce((sum, file) => {
+    //     const amounts = Deno.readTextFile(file).then((transaction) => {
+    //       return transFiles.split("\n");
+    //     });
+    //   });
+    // });
+  });
+};
+
+console.log(extractTransactions());
