@@ -1,3 +1,5 @@
-Deno.readTextFile("./input1.txt").then((data) => {
-  console.log("Hami Finance Data:", data);
-});
+const extractCustomers = () => {
+  return Deno.readTextFile("./customers.csv").then((data) => {
+    return data.split("\n").map((line) => line.trim());
+  });
+};
