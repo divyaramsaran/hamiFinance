@@ -42,5 +42,11 @@ const extractTransactions = async () => {
 };
 
 extractTransactions().then((data) => {
-  console.log(data);
+  data.forEach((customer) => {
+    Deno.writeTextFile(
+      "./balance.csv",
+      `${customer[0]},${customer[1]},${customer[2]}\n`,
+      { append: true }
+    );
+  });
 });
