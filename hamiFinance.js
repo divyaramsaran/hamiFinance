@@ -23,25 +23,22 @@ const add = (arr) => {
   }, 0);
 };
 
-const extractTransactions = () => {
-  return extractCustomers().then((val) => {
-    return val.map((customer) => {
+const extractTransactions = async () => {
+  const customers = await extractCustomers();
+  return Promise.all(
+    customers.map(async (customer) => {
       const [name, ...transFiles] = customer;
-
-      const allTransactionsSum = transFiles.reduce((sum, file) => {
-        const transactionsSum = Deno.readTextFile("./inputFiles/" + file).then(
-          (data) => {
-            const transactions = data
-              .split("\n")
-              .map((strNum) => Number(strNum));
-            return add(transactions);
-          }
-        );
-        return sum + transactionsSum;
-      }, 0);
-      return [name, allTransactionsSum];
-    });
-  });
+      let allTransactionsSum = 0;
+      let transactionsCount = 0;
+      for (const file of transFiles) {
+        const data = await Deno.readTextFile("./inputFiles/" + file);
+        const transactions = data.split("\n").map((strNum) => Number(strNum));
+        allTransactionsSum += add(transactions);
+        transactionsCount += transactions.length;
+      }
+      return [name, transactionsCount, allTransactionsSum];
+    })
+  );
 };
 
 extractTransactions().then((data) => {
