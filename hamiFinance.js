@@ -17,17 +17,33 @@ const extractCustomers = () => {
     });
 };
 
+const add = (arr) => {
+  return arr.reduce((sum, number) => {
+    return sum + number;
+  }, 0);
+};
+
 const extractTransactions = () => {
   return extractCustomers().then((val) => {
-    // val.map((customer) => {
-    //   const [name, ...transFiles] = customer;
-    //   transFiles.reduce((sum, file) => {
-    //     const amounts = Deno.readTextFile(file).then((transaction) => {
-    //       return transFiles.split("\n");
-    //     });
-    //   });
-    // });
+    return val.map((customer) => {
+      const [name, ...transFiles] = customer;
+
+      const allTransactionsSum = transFiles.reduce((sum, file) => {
+        const transactionsSum = Deno.readTextFile("./inputFiles/" + file).then(
+          (data) => {
+            const transactions = data
+              .split("\n")
+              .map((strNum) => Number(strNum));
+            return add(transactions);
+          }
+        );
+        return sum + transactionsSum;
+      }, 0);
+      return [name, allTransactionsSum];
+    });
   });
 };
 
-console.log(extractTransactions());
+extractTransactions().then((data) => {
+  console.log(data);
+});
