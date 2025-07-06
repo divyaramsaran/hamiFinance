@@ -32,7 +32,10 @@ const extractTransactions = async () => {
       let transactionsCount = 0;
       for (const file of transFiles) {
         const data = await Deno.readTextFile("./inputFiles/" + file);
-        const transactions = data.split("\n").map((strNum) => Number(strNum));
+        const transactions = data
+          .split("\n")
+          .filter((strNum) => strNum.trim() !== "")
+          .map((strNum) => Number(strNum));
         allTransactionsSum += add(transactions);
         transactionsCount += transactions.length;
       }
@@ -41,12 +44,12 @@ const extractTransactions = async () => {
   );
 };
 
-extractTransactions().then((data) => {
-  data.forEach((customer) => {
-    Deno.writeTextFile(
+extractTransactions().then(async (data) => {
+  for (const customer of data) {
+    await Deno.writeTextFile(
       "./balance.csv",
       `${customer[0]},${customer[1]},${customer[2]}\n`,
       { append: true }
     );
-  });
+  }
 });
